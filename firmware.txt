@@ -1,0 +1,94 @@
+//Firmware for Sarah Busch and Emily Wolfe's IoT Smart Lamp
+//using a Particle Photon dev board
+//Written by Sarah Rosanna Busch in October 2016
+
+//Flash this code to your device to use with the lamp controls webpage
+
+int redLED1 = D0;
+int whiteLED1 = D1;
+//rest of digital pins will control other groups of leds
+int lightSensor = A0;
+int sensorPower = A5;
+
+int analogLight;
+
+void setup()
+{
+    pinMode(redLED1, OUTPUT); //digital pin 0 controls the red LEDs
+    pinMode(whiteLED1, OUTPUT); //digital pin 1 controls the white LEDs
+    //all digital pins will be outputs
+
+    pinMode(lightSensor, INPUT); //reads analog value on pin A0
+    pinMode(sensorPower, OUTPUT); //provides constant voltage to A5
+
+    //ensure all LEDs are off to start
+    digitalWrite(redLED1, LOW);
+    digitalWrite(whiteLED1, LOW);
+
+    //declaration of Particle.variable()s that can be accessed from the cloud
+    //requesting "A0value" references 'analogLight' in this app
+    Particle.variable("A0value", &analogLight, INT);
+
+    //declaration of Particle.function()s to be accessed from the cloud
+    //requesting "lampOn" runs dayLight() from this app
+    Particle.function("lampOn", dayLight);
+    Particle.function("lampOff", lampOff);
+    //Particle.function("getLight", readLight);
+
+    //turn on power to the photoresistor (this will move to readLight() so that it is only powered when needed)
+    digitalWrite(sensorPower, HIGH);
+}
+
+void loop()
+{
+    //get the analog value of the photoresistor
+    analogLight = analogRead(lightSensor);
+    delay(100);
+}
+
+//Particle.functions must take a string as an argument and return an integer
+int dayLight(String command)
+{
+    digitalWrite(redLED1, HIGH);
+    digitalWrite(whiteLED1, HIGH);
+
+}
+
+int lampOff(String command)
+{
+    digitalWrite(redLED1, LOW);
+    digitalWrite(whiteLED1, LOW);
+}
+
+ /*Once I figure out how to send() a name-value pair from javascript (like with an html "submit" button)
+    we should be able to send any string command from the cloud to this firmware to do stuff like:
+
+    if(command == "day") //turn the lamp on
+    {
+        digitalWrite(redLED, LOW);
+        digitalWrite(whiteLED, HIGH);
+        return 1;
+    }
+    else if(command == "evening")
+    {
+        digitalWrite(redLED, HIGH);
+        digitalWrite(whiteLED, HIGH);
+        return 2;
+    }
+    else if(command == "night")
+    {
+        digitalWrite(redLED, HIGH);
+        digitalWrite(whiteLED, LOW);
+        return 3;
+    }
+    else if(command == "off") //turn the lamp off
+    {
+        digitalWrite(redLED, LOW);
+        digitalWrite(whiteLED,LOW);
+        return 0;
+    }
+    else //if invalid command
+    {
+        return -1;
+    }
+    */

@@ -1,0 +1,36 @@
+<!DOCTYPE>
+<html>
+<head>
+
+</head>
+<body>
+  <h1>
+    Smart Lamp Control Center
+  </h1>
+  <hr><br>
+  <!-- the following request is based on https://community.particle.io/t/reading-spark-variables-with-your-own-html-file/4148 -->
+  <button id='getButton' onclick='readPhotoresistor()'> Read Photoresistor </button><br><br>
+  <span id='light'></span><br><br>
+  <hr><br>
+  <button onclick='lampOn()'> Turn on Lamp </button><br><br>
+  <button onclick='lampOff()'> Turn Lamp Off </button><br><br>
+  <span id='lampStatus'></span><br><br>
+  <!-- initialize comms with a specific Particle device -->
+  <!--form action="https://api.particle.io/v1/devices/3e0031000847343133353336/lampPower?access_token=4ed978c8d44ee74e0da0a2e08db5dcd401ce9958" method="POST">
+    <input type="radio" name="args" value="day">Bright Light
+    <br>
+    <input type="radio" name="args" value="evening">Evening Light
+    <br>
+    <input type="radio" name="args" value="night">Night light
+    <br>
+    <input type="radio" name="args" value="off">Lamp Off
+    <br>
+    <br>
+    <input type="submit" value="Do it!">
+  </form-->
+  <hr><br>
+  </body>
+  <script src='scripts.js'></script>
+  <!-- to be able to get JSON value from Particle cloud: -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+</html>
