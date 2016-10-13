@@ -1,5 +1,5 @@
-var deviceID = "3e0031000847343133353336"; //change these to your device's
-var accessToken = "4ed978c8d44ee74e0da0a2e08db5dcd401ce9958"; //eventually these values will be obtained from a user form
+var deviceID = "your-device-ID"; //change these to your device's
+var accessToken = "your-access-token"; //eventually these values will be obtained from a user form
 
 //this function is based on https://community.particle.io/t/reading-spark-variables-with-your-own-html-file/4148
 //this seems to be the easiest way to get the data since Particle gives it in JSON format
